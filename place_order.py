@@ -1,10 +1,14 @@
+import os
 import time
 import requests
 import hmac
 from hashlib import sha256
+from dotenv import load_dotenv
 
-APIURL = "https://open-api.bingx.com"
-APIKEY = "test_key"
+load_dotenv()
+
+API_KEY = os.environ.get('API_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 SECRETKEY = "test_key"
 
 def place_order(symbol, side, position_side, order_type, quantity, take_profit):

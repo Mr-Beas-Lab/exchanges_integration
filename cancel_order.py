@@ -1,12 +1,15 @@
-
+import os
 import time
 import requests
 import hmac
 from hashlib import sha256
+from dotenv import load_dotenv
 
+load_dotenv()
+
+API_KEY = os.environ.get('API_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 APIURL = "https://open-api.bingx.com"
-APIKEY = "test_key"
-SECRETKEY = "test_key"
 
 def cancel_order(symbol, order_id):
     payload = {}
@@ -27,10 +30,10 @@ def get_sign(api_secret, payload):
 
 
 def send_request(method, path, urlpa, payload):
-    url = "%s%s?%s&signature=%s" % (APIURL, path, urlpa, get_sign(SECRETKEY, urlpa))
+    url = "%s%s?%s&signature=%s" % (APIURL, path, urlpa, get_sign(SECRET_KEY, urlpa))
     print(url)
     headers = {
-        'X-BX-APIKEY': APIKEY,
+        'X-BX-APIKEY': API_KEY,
     }
     response = requests.request(method, url, headers=headers, data=payload)
     return response.text

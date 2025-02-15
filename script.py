@@ -1,7 +1,14 @@
+import os
 import time
 import hmac
 import requests
 from hashlib import sha256
+from dotenv import load_dotenv
+
+load_dotenv()
+
+API_KEY = os.environ.get('API_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 def create_signature(api_secret, params):
     sorted_keys = sorted(params.keys())
@@ -29,7 +36,5 @@ def get_balance(api_key, secret_key):
     return response.json()
 
 if __name__ == "__main__":
-    APIKEY = "test_key"
-    SECRETKEY = "test_key"
 
-    balance_info = get_balance(APIKEY, SECRETKEY)
+    balance_info = get_balance(API_KEY, SECRET_KEY)
